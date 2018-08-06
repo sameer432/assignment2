@@ -54,7 +54,7 @@ public class AppActivity extends Activity{
     File root = android.os.Environment.getExternalStorageDirectory();
     File dir = new File(root.getAbsolutePath() + "/Android/Data/CSE535_ASSIGNMENT2/");
 
-    public final static String uploadFilePath = "/storage/emulated/0/Android/Data/CSE535_ASSIGNMENT2/";
+    public final static String uploadFilePath = "/data/data/com.example.sameer.group10/databases/";
     public final static String uploadFileName = "group10.db";
 
     public final static String downloadFilePath = "/storage/emulated/0/Android/Data/CSE535_ASSIGNMENT2/";
@@ -394,7 +394,7 @@ public class AppActivity extends Activity{
 
                     dataOutputStreamObject.writeBytes(hyphens + boundaryMarker + lineEnd);
                     dataOutputStreamObject.writeBytes("Content-Disposition: form-data; name=" + "uploaded_file;filename="
-                            + uploadFilePath + "" + uploadFileName + "" + lineEnd);
+                           + uploadFilePath + "" + uploadFileName + "" + lineEnd);
 
                     dataOutputStreamObject.writeBytes(lineEnd);
 
