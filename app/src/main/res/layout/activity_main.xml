@@ -11,89 +11,81 @@
     tools:context="com.example.sameer.group10.MainActivity">
 
 
+    <LinearLayout
+        android:id="@+id/details1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM//+"
-        android:ems="10"
-        android:id="@+id/name"
-        android:hint="Patient Name"
-        android:width="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/age"
-        android:hint="Patient Age"
-        android:width="200dp"
-        />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/age"
-        android:inputType="textPersonName"
-        android:digits="1234567890//+"
-        android:ems="10"
-        android:id="@+id/patid"
-        android:hint="Patient ID"
-        android:width="200dp"
-        />
-
-
-
-
-
-
-
-
-
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/patid">
-
-        <RadioButton
-            android:text="Male"
+        <EditText
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/inputpatid"
-            android:layout_toRightOf="@id/sex"
-            android:layout_marginTop="21dp"
-            android:layout_marginStart="30dp"
-            android:id="@+id/male" />
+            android:width="200dp"
+            android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM//+"
+            android:ems="10"
+            android:hint="Patient Name"
+            android:inputType="textPersonName" />
 
-        <RadioButton
-            android:text="Female"
+
+        <EditText
+            android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sex"
-            android:layout_toRightOf="@id/male"
-            android:layout_marginTop="21dp"
-            android:layout_marginStart="30dp"
-            android:id="@+id/female" />
-    </RadioGroup>
+            android:width="200dp"
+            android:ems="10"
+            android:hint="Patient Age"
+            android:inputType="textPersonName" />
 
-    <Button
+        <EditText
+            android:id="@+id/patid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="200dp"
+            android:digits="1234567890//+"
+            android:ems="10"
+            android:hint="Patient ID"
+            android:inputType="textPersonName" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/details2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
-        android:layout_marginTop="240dp"
-        android:layout_marginStart="115dp"
-        android:id="@+id/start" />
+        android:layout_below="@id/details1">
+
+        <RadioGroup
+            android:id="@+id/sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/details1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+        </RadioGroup>
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="10dp"
+            android:text="Next"
+            android:textStyle="bold"
+            android:layout_below="@id/details2"/>
 
 
 </RelativeLayout>

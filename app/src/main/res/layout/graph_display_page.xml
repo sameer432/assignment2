@@ -9,69 +9,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
 
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text=" "
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"
-                android:id="@+id/name"/>
+                android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginStart="10dp"
-                android:textSize="18sp"
-                android:id="@+id/age"/>
+                android:text=""
+                android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/patid"
                 android:layout_width="wrap_content"
-                android:text=""
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_marginStart="10dp"
-                android:id="@+id/patid"/>
+                android:text=""
+                android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/gen"
                 android:layout_width="wrap_content"
-                android:text=""
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_marginStart="20dp"
-                android:id="@+id/gen"/>
+                android:text=""
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/xaxis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:text="X-Axis = Time"
-            android:textSize="12sp"
-            android:layout_marginStart="20dp"
-                android:focusable="false"
-            android:id="@+id/xaxis"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Y-Axis = Accelerometer values"
-                android:textSize="12sp"
                 android:layout_marginStart="20dp"
                 android:focusable="false"
+                android:text="X-Axis = Time"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/yaxis"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:focusable="false"
+                android:text="Y-Axis = Accelerometer values"
+                android:textSize="12sp" />
         </LinearLayout>
+
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp" />
     </LinearLayout>
 
 

@@ -37,40 +37,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button btn = (Button) findViewById(R.id.start);
         btn.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View view) {
-                                           EditText nameBox = (EditText) findViewById(R.id.name);
-                                           EditText ageBox = (EditText) findViewById(R.id.age);
-                                           EditText idBox = (EditText) findViewById(R.id.patid);
-                                           // gender = ((RadioButton)findViewById(R.id.male)).getCheckedRadioButtonId()
+                                   @Override
+                                   public void onClick(View view) {
+                                       EditText nameBox = (EditText) findViewById(R.id.name);
+                                       EditText ageBox = (EditText) findViewById(R.id.age);
+                                       EditText idBox = (EditText) findViewById(R.id.patid);
+                                       // gender = ((RadioButton)findViewById(R.id.male)).getCheckedRadioButtonId()
 
-                                           final String name = nameBox.getText().toString();
-                                           final String age = ageBox.getText().toString();
-                                           final String id = idBox.getText().toString();
-                                           if (name.equals("") || id.equals("") || age.equals("")) {
-                                               Toast.makeText(MainActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                                               return;
-                                           }
-                                           String gen = "";
-                                           RadioButton str = (RadioButton) findViewById(R.id.male);
-                                           Boolean value = str.isChecked();
-                                           if (value == true) {
-                                               gen = "M";
-                                           } else {
-                                               gen = "F";
-                                           }
-
-                                           table = name + "_" + id + "_" + age + "_" + gen;
-                                           Intent myIntent = new Intent(MainActivity.this, AppActivity.class);
-                                           myIntent.putExtra("name", name);
-                                           myIntent.putExtra("age", age);
-                                           myIntent.putExtra("id", id);
-                                           myIntent.putExtra("sex", gen);
-                                           myIntent.putExtra("TableName", table);
-                                           startActivity(myIntent);
-
+                                       final String name = nameBox.getText().toString();
+                                       final String age = ageBox.getText().toString();
+                                       final String id = idBox.getText().toString();
+                                       if (name.equals("") || id.equals("") || age.equals("")) {
+                                           Toast.makeText(MainActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                                           return;
                                        }
+                                       String gen = "";
+                                       RadioButton str = (RadioButton) findViewById(R.id.male);
+                                       Boolean value = str.isChecked();
+                                       if (value == true) {
+                                           gen = "M";
+                                       } else {
+                                           gen = "F";
+                                       }
+
+                                       table = name + "_" + id + "_" + age + "_" + gen;
+                                       Intent myIntent = new Intent(MainActivity.this, AppActivity.class);
+                                       myIntent.putExtra("name", name);
+                                       myIntent.putExtra("age", age);
+                                       myIntent.putExtra("id", id);
+                                       myIntent.putExtra("sex", gen);
+                                       myIntent.putExtra("TableName", table);
+                                       startActivity(myIntent);
+
                                    }
+                               }
         );
 
     }

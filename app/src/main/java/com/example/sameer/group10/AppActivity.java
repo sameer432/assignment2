@@ -39,18 +39,20 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
+
 import java.net.HttpURLConnection;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-public class AppActivity extends Activity{
+public class AppActivity extends Activity {
 
     private SQLiteDatabase conn;
     private SensorManager snsrmgr;
     private Sensor Accelerometer;
     public final static String serverURL = "http://impact.asu.edu/CSE535Spring18Folder/";
-    public final static String uploadURIinServer = serverURL +"UploadToServer.php";
+    public final static String uploadURIinServer = serverURL + "UploadToServer.php";
     File root = android.os.Environment.getExternalStorageDirectory();
     File dir = new File(root.getAbsolutePath() + "/Android/Data/CSE535_ASSIGNMENT2/");
 
@@ -59,7 +61,7 @@ public class AppActivity extends Activity{
 
     public final static String downloadFilePath = "/storage/emulated/0/Android/Data/CSE535_ASSIGNMENT2/";
     //File file = new File(dir);
-    public final static String downloadURL = serverURL +uploadFileName;
+    public final static String downloadURL = serverURL + uploadFileName;
     public final static String redCC = "#ff0000";
     public final static String blueCC = "#00ff00";
     public final static String greenCC = "#0000ff";
@@ -88,10 +90,10 @@ public class AppActivity extends Activity{
     SSLContext context = null;
     private boolean firstStart = true;
     String tableName;
-    boolean flag=true;
+    boolean flag = true;
 
-    long previousTime=0;
-    private SensorEventListener acclListener=new SensorEventListener() {
+    long previousTime = 0;
+    private SensorEventListener acclListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent acclEvent) {
             Sensor AcclSensor = acclEvent.sensor;
@@ -100,57 +102,51 @@ public class AppActivity extends Activity{
                 float y = acclEvent.values[1];
                 float z = acclEvent.values[2];
                 long currentTime = System.currentTimeMillis();
-                String msg=Long.toString(currentTime)+","+Float.toString(x)+","+Float.toString(y)+","+Float.toString(z);
-                if ((currentTime-previousTime)>1000) {
+                String msg = Long.toString(currentTime) + "," + Float.toString(x) + "," + Float.toString(y) + "," + Float.toString(z);
+                if ((currentTime - previousTime) > 1000) {
                     try {
                         conn.execSQL("INSERT INTO " + tableName + " VALUES (" + msg + ");");
+                    } catch (Exception e) {
+                        Log.d(e.getMessage(), " Insert part");
                     }
-                    catch (Exception e)
-                    {
-                        Log.d(e.getMessage()," Insert part");
-                    }
-                    previousTime=currentTime;
+                    previousTime = currentTime;
                 }
             }
         }
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
-            Log.d("Sensor Accuracy changed","Sensor Accuracy Changed");
+            Log.d("Sensor Accuracy changed", "Sensor Accuracy Changed");
         }
     };
 
     // Register Sensor to start recording data
-    private void registerAcclListener()
-    {
+    private void registerAcclListener() {
         snsrmgr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Accelerometer = snsrmgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        snsrmgr.registerListener(acclListener,Accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
-        Log.d("Registered Listener","Registered Listener");
+        snsrmgr.registerListener(acclListener, Accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        Log.d("Registered Listener", "Registered Listener");
     }
 
-    private void createTable(String t_name,SQLiteDatabase connection)
-    {
-        Log.d(t_name,t_name);
+    private void createTable(String t_name, SQLiteDatabase connection) {
+        Log.d(t_name, t_name);
         try {
             connection.execSQL("CREATE TABLE " + t_name + " (Time_Stamp REAL, X_Value REAL, Y_Value REAL, Z_Value REAL);");
             Log.d("Table Created ", t_name);
-        }
-        catch (Exception e)
-        {
-            Log.d("Table Already exists: ",t_name);
+        } catch (Exception e) {
+            Log.d("Table Already exists: ", t_name);
         }
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String appName=uploadFileName;
+        String appName = uploadFileName;
         setContentView(R.layout.graph_display_page);
         TextView txtview = (TextView) findViewById(R.id.name);
         TextView txtview1 = (TextView) findViewById(R.id.age);
@@ -158,13 +154,12 @@ public class AppActivity extends Activity{
         TextView txtview3 = (TextView) findViewById(R.id.gen);
         Intent intent = getIntent();
         Bundle bd = intent.getExtras();
-        if(bd != null)
-        {
+        if (bd != null) {
             String getName = (String) bd.get("name");
             String getAge = (String) bd.get("age");
             String getId = (String) bd.get("id");
             String gen = (String) bd.get("sex");
-            tableName=(String) bd.get("TableName");
+            tableName = (String) bd.get("TableName");
             txtview.setText(getName);
             txtview1.setText(getAge);
             txtview2.setText(getId);
@@ -172,7 +167,7 @@ public class AppActivity extends Activity{
 
         }
 
-        conn =openOrCreateDatabase(appName,MODE_PRIVATE,null);
+        conn = openOrCreateDatabase(appName, MODE_PRIVATE, null);
         registerAcclListener();
         createTable(tableName, conn);
 
@@ -199,7 +194,7 @@ public class AppActivity extends Activity{
         keyThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i=0;!stopIt;i++){
+                for (int i = 0; !stopIt; i++) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -208,8 +203,8 @@ public class AppActivity extends Activity{
                     });
                     try {
                         Thread.sleep(1000);
-                    }catch (InterruptedException e){
-                        Log.d("Interrupted",e.toString());
+                    } catch (InterruptedException e) {
+                        Log.d("Interrupted", e.toString());
                     }
                 }
             }
@@ -218,22 +213,21 @@ public class AppActivity extends Activity{
     }
 
 
-    public void runListener(){
+    public void runListener() {
         runButton = (Button) findViewById(R.id.run_button);
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopIt = false;
                 registerAcclListener();
-                if(gv.getSeries().isEmpty())
-                {
+                if (gv.getSeries().isEmpty()) {
                     gv.addSeries(values);
                     gv.addSeries(secondValues);
                     gv.addSeries(thirdValues);
                     keyThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            for (int i=0;!stopIt;i++){
+                            for (int i = 0; !stopIt; i++) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -242,45 +236,44 @@ public class AppActivity extends Activity{
                                 });
                                 try {
                                     Thread.sleep(1000);
-                                }catch (InterruptedException e){
-                                    Log.d("Interrupted",e.toString());
+                                } catch (InterruptedException e) {
+                                    Log.d("Interrupted", e.toString());
                                 }
                             }
                         }
                     });
                     keyThread.start();
-                }else {
+                } else {
                     return;
                 }
             }
         });
     }
 
-    public void stopListener(){
+    public void stopListener() {
         stopButton = (Button) findViewById(R.id.stop_button);
-        stopButton.setOnClickListener(new View.OnClickListener(){
+        stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopIt = true;
-                flag=true;
+                flag = true;
                 gv.removeAllSeries();
             }
         });
     }
 
-    private void appendValues(){
-        Log.d("Table's name",tableName);
+    private void appendValues() {
+        Log.d("Table's name", tableName);
         float fl;
-        float x,y,z;
-        String selectQuery="SELECT * FROM " + tableName + " ORDER BY Time_Stamp DESC LIMIT 1;";
-        if(flag)
-        {
-            selectQuery="SELECT * FROM " + tableName + " ORDER BY Time_Stamp DESC LIMIT 10;";
-            flag=false;
+        float x, y, z;
+        String selectQuery = "SELECT * FROM " + tableName + " ORDER BY Time_Stamp DESC LIMIT 1;";
+        if (flag) {
+            selectQuery = "SELECT * FROM " + tableName + " ORDER BY Time_Stamp DESC LIMIT 10;";
+            flag = false;
         }
         try {
             Cursor sel = conn.rawQuery(selectQuery, null);
-            int c=0;
+            int c = 0;
             sel.moveToFirst();
             do {
                 int timeStamp = sel.getInt(0);
@@ -295,33 +288,30 @@ public class AppActivity extends Activity{
             Log.d("C: ", Integer.toString(c));
 
         }//comment
-        catch (Exception e)
-        {
-            Log.d("Append Value"," DB object closed");
+        catch (Exception e) {
+            Log.d("Append Value", " DB object closed");
         }
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         conn.close();
-        Log.d("Unregistering sensor","unregistering sensor");
+        Log.d("Unregistering sensor", "unregistering sensor");
         try {
             snsrmgr.unregisterListener(acclListener);
-        }
-        catch (Exception e){
-            Log.d(e.getMessage(),"Sensor not registered");
+        } catch (Exception e) {
+            Log.d(e.getMessage(), "Sensor not registered");
         }
     }
 
 
-    public void uploadListener(){
-        Button uploadButton =    (Button) findViewById(R.id.upload_button);
-        uploadButton.setOnClickListener(new View.OnClickListener(){
+    public void uploadListener() {
+        Button uploadButton = (Button) findViewById(R.id.upload_button);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                progressDialogObject = ProgressDialog.show(AppActivity.this,"","Uploading Database",true);
+            public void onClick(View v) {
+                progressDialogObject = ProgressDialog.show(AppActivity.this, "", "Uploading Database", true);
                 new Upload(AppActivity.this).execute();
                 progressDialogObject.dismiss();
             }
@@ -329,8 +319,9 @@ public class AppActivity extends Activity{
     }
 
 
-    class Upload extends AsyncTask{
+    class Upload extends AsyncTask {
         private Context context1;
+
         public Upload(Context context) {
             this.context1 = context;
         }
@@ -355,9 +346,11 @@ public class AppActivity extends Activity{
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
+
                 @Override
                 public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
                 }
+
                 @Override
                 public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
                 }
@@ -394,7 +387,7 @@ public class AppActivity extends Activity{
 
                     dataOutputStreamObject.writeBytes(hyphens + boundaryMarker + lineEnd);
                     dataOutputStreamObject.writeBytes("Content-Disposition: form-data; name=" + "uploaded_file;filename="
-                           + uploadFilePath + "" + uploadFileName + "" + lineEnd);
+                            + uploadFilePath + "" + uploadFileName + "" + lineEnd);
 
                     dataOutputStreamObject.writeBytes(lineEnd);
 
@@ -444,12 +437,11 @@ public class AppActivity extends Activity{
 
                 }
 
-            }catch (KeyManagementException e) {
+            } catch (KeyManagementException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-            }
-            catch (MalformedURLException ex) {
+            } catch (MalformedURLException ex) {
                 //dialog.dismiss();
                 ex.printStackTrace();
                 String temp = "value displayed";
@@ -480,8 +472,9 @@ public class AppActivity extends Activity{
     }
 
 
-    class Download extends AsyncTask{
+    class Download extends AsyncTask {
         private Context context1;
+
         public Download(Context context) {
             this.context1 = context;
         }
@@ -499,9 +492,11 @@ public class AppActivity extends Activity{
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
+
                 @Override
                 public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
                 }
+
                 @Override
                 public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
                 }
@@ -527,15 +522,14 @@ public class AppActivity extends Activity{
                 downData = new byte[4096];
                 int count;
                 conn.connect();
-                while((count=input.read(downData)) != -1){
-                    if(isCancelled()){
+                while ((count = input.read(downData)) != -1) {
+                    if (isCancelled()) {
                         input.close();
                         return null;
                     }
-                    output.write(downData,0,count);
+                    output.write(downData, 0, count);
                 }
-            }
-            catch (KeyManagementException e) {
+            } catch (KeyManagementException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
@@ -570,24 +564,24 @@ public class AppActivity extends Activity{
             return "success";
         }
     }
-    public void downloadListener(){
-        Button uploadButton =    (Button) findViewById(R.id.download_button);
 
-        uploadButton.setOnClickListener(new View.OnClickListener(){
+    public void downloadListener() {
+        Button uploadButton = (Button) findViewById(R.id.download_button);
+
+        uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                progressDialogObject = ProgressDialog.show(AppActivity.this,"","Downloading Database",true);
+            public void onClick(View v) {
+                progressDialogObject = ProgressDialog.show(AppActivity.this, "", "Downloading Database", true);
                 new Download(AppActivity.this).execute();
                 progressDialogObject.dismiss();
                 stopIt = true;
-                flag=true;
+                flag = true;
                 gv.removeAllSeries();
-                Log.d("Unregistering sensor","unregistering sensor");
+                Log.d("Unregistering sensor", "unregistering sensor");
                 try {
                     snsrmgr.unregisterListener(acclListener);
-                }
-                catch (Exception e){
-                    Log.d(e.getMessage(),"Sensor not registered");
+                } catch (Exception e) {
+                    Log.d(e.getMessage(), "Sensor not registered");
                 }
                 runOnUiThread(new Runnable() {
                                   public void run() {
