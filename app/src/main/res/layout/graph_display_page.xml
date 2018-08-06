@@ -100,9 +100,8 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/fullscreen_content_controls"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -110,35 +109,53 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
+            <LinearLayout
+                android:id="@+id/graphButtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Button
                 android:id="@+id/run_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Run" />
+                android:textStyle="bold"
+                android:text="Run"/>
 
             <Button
                 android:id="@+id/stop_button"
+                android:layout_below="@id/run_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Stop" />
+                android:text="Stop"
+                android:textStyle="bold"/>
 
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dbButton"
+                android:layout_below="@id/graphButtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Button
                 android:id="@+id/upload_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Upload DB" />
+                android:text="Upload DB"
+                android:textStyle="bold"
+                />
 
             <Button
                 android:id="@+id/download_button"
+                android:layout_below="@id/upload_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="Download DB" />
+            </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </FrameLayout>
 
