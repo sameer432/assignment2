@@ -11,9 +11,9 @@
     tools:context="com.example.sameer.group10.MainActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/details1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
 
@@ -32,6 +32,7 @@
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/name"
             android:width="200dp"
             android:ems="10"
             android:hint="Patient Age"
@@ -41,6 +42,7 @@
             android:id="@+id/patid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/age"
             android:width="200dp"
             android:digits="1234567890//+"
             android:ems="10"
@@ -48,19 +50,18 @@
             android:inputType="textPersonName" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/details2"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/details1">
+        android:layout_toRightOf="@id/details1">
 
         <RadioGroup
             android:id="@+id/sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/details1"
             android:orientation="horizontal">
 
             <RadioButton
@@ -75,17 +76,19 @@
                 android:layout_height="wrap_content"
                 android:text="Female" />
         </RadioGroup>
-    </LinearLayout>
+
 
         <Button
             android:id="@+id/start"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/sex"
+            android:layout_marginLeft="10dp"
             android:background="@android:color/holo_blue_dark"
             android:padding="10dp"
             android:text="Next"
-            android:textStyle="bold"
-            android:layout_below="@id/details2"/>
+            android:textStyle="bold" />
 
-
+    </RelativeLayout>
 </RelativeLayout>
