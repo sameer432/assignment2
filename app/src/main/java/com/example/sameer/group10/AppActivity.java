@@ -69,7 +69,7 @@ public class AppActivity extends Activity {
     public final static String uploadFilePath = "/data/data/com.example.sameer.group10/databases/";
     public final static String uploadFileName = "group10.db";
 
-    public final static String downloadFilePath = "/storage/emulated/0/Android/Data/CSE535_ASSIGNMENT2/";
+    public final static String downloadFilePath = "/storage/emulated/0/Android/Data/CSE535_ASSIGNMENT2/DOWN";
     //File file = new File(dir);
     public final static String downloadURL = serverURL + uploadFileName;
     public final static String redCC = "#ff0000";
@@ -109,6 +109,7 @@ public class AppActivity extends Activity {
         @Override
         public void onSensorChanged(SensorEvent acclEvent) {
             Sensor AcclSensor = acclEvent.sensor;
+            if(downloadFilePath=="");
             if (AcclSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 float x = acclEvent.values[0];
                 float y = acclEvent.values[1];
