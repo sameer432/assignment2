@@ -46,6 +46,16 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+
+
+/**
+ * Created by sameer kulkarni on 8/2/18.
+ */
+/**
+ * Android app to display accelerometer data in a graph with upload/download functionality
+ * to/from the impact lab server.
+ */
+
 public class AppActivity extends Activity {
 
     private SQLiteDatabase conn;
@@ -93,6 +103,8 @@ public class AppActivity extends Activity {
     boolean flag = true;
 
     long previousTime = 0;
+
+    //Gets time and sensor x,y,z values each time the phone is moved at the rate of 1 times per second
     private SensorEventListener acclListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent acclEvent) {
@@ -120,7 +132,7 @@ public class AppActivity extends Activity {
         }
     };
 
-    // Register Sensor to start recording data
+    // Register the accelerometer of the device to start getting data from it.
     private void registerAcclListener() {
         snsrmgr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Accelerometer = snsrmgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -128,6 +140,8 @@ public class AppActivity extends Activity {
         Log.d("Registered Listener", "Registered Listener");
     }
 
+
+    //instantiate database and create table with name time_stamp_x_y_z values
     private void createTable(String t_name, SQLiteDatabase connection) {
         Log.d(t_name, t_name);
         try {
@@ -143,6 +157,7 @@ public class AppActivity extends Activity {
         super.onResume();
     }
 
+    //takes the entered values and stores it under name,age etc variables for later use
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,6 +181,8 @@ public class AppActivity extends Activity {
             txtview3.setText(gen);
 
         }
+
+        //defines the graph bounds and makes the graph scrollable.
 
         conn = openOrCreateDatabase(appName, MODE_PRIVATE, null);
         registerAcclListener();
@@ -213,6 +230,9 @@ public class AppActivity extends Activity {
     }
 
 
+    //handles what run button does. It gets data from the sensor every second and appends it to the values
+    // to be plotted on the graph.
+
     public void runListener() {
         runButton = (Button) findViewById(R.id.run_button);
         runButton.setOnClickListener(new View.OnClickListener() {
@@ -250,6 +270,7 @@ public class AppActivity extends Activity {
         });
     }
 
+    //handles what stop button does. It clears the graph after stop button us clicked
     public void stopListener() {
         stopButton = (Button) findViewById(R.id.stop_button);
         stopButton.setOnClickListener(new View.OnClickListener() {
@@ -293,6 +314,8 @@ public class AppActivity extends Activity {
         }
     }
 
+    //unregisters the sensor on exiting from the activity.
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -306,6 +329,8 @@ public class AppActivity extends Activity {
     }
 
 
+    //Handles what the upload button does. This method calls the Upload method.
+
     public void uploadListener() {
         Button uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -317,6 +342,10 @@ public class AppActivity extends Activity {
             }
         });
     }
+
+
+
+    //Handles the uploading task.
 
 
     class Upload extends AsyncTask {
@@ -359,6 +388,8 @@ public class AppActivity extends Activity {
                 SSLContext sc = SSLContext.getInstance("TLS");
                 sc.init(null, trustAllCerts, new SecureRandom());
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+                //checks if source db file is present in /data/ folder
                 if (!sourceFile.isFile()) {
                     Log.e("uploadFile", "Source File not exist :"
                             + uploadFilePath + "" + uploadFileName);
@@ -472,6 +503,9 @@ public class AppActivity extends Activity {
     }
 
 
+    //handles download task
+
+
     class Download extends AsyncTask {
         private Context context1;
 
@@ -488,6 +522,8 @@ public class AppActivity extends Activity {
             FileInputStream fileInputStream = null;
             byte[] downData = null;
             int serverResponseCode = 0;
+
+            // Since Impact lab ssl certificates are not recognized authorizing to accept any ssl certificates
             TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -511,12 +547,16 @@ public class AppActivity extends Activity {
                 url = new URL(downloadURL);
                 conn = (HttpURLConnection) url.openConnection();
                 input = conn.getInputStream();
+
+                //creates CSE535_ASSIGNMENT2_DOWN folder in /Android/Data/
                 String rootPath = android.os.Environment.getExternalStorageDirectory()
                         .getAbsolutePath() + "/Android/Data/CSE535_ASSIGNMENT2_DOWN/";
                 File root = new File(rootPath);
                 if (!root.exists()) {
                     root.mkdirs();
                 }
+
+                //writes the input data stream to the created db file
                 File f = new File(rootPath + "group10.db");
                 output = new FileOutputStream(f);
                 downData = new byte[4096];
@@ -564,6 +604,9 @@ public class AppActivity extends Activity {
             return "success";
         }
     }
+
+
+    //handles what download button does. This method calls the download method above.
 
     public void downloadListener() {
         Button uploadButton = (Button) findViewById(R.id.download_button);
